@@ -5,8 +5,6 @@
 #include "SpriteComponent.h"
 #include "SDL.h"
 
-using namespace std;
-
 class TileComponent : public Component {
 public:
 	TransformComponent * transform;

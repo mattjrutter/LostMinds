@@ -8,8 +8,8 @@ public:
 	Vector2D position;
 	Vector2D velocity;
 
-	int height = 420;
-	int width = 320;
+	int height = 32;
+	int width = 32;
 	double scale = 1;
 	int speed = 1;
 

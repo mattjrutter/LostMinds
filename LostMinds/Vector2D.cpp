@@ -70,7 +70,7 @@ Vector2D& Vector2D::Zero() {
 	return *this;
 }
 
-ostream& operator<<(ostream stream, const Vector2D& vector) {
+std::ostream& operator<<(std::ostream stream, const Vector2D& vector) {
 	stream << "(" << vector.x << ", " << vector.y << ")";
 	return stream;
 }

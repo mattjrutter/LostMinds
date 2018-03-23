@@ -1,24 +1,26 @@
 #include "Game.h"
 #include "TextureManager.h"
-#include "GameObject.h"
 #include "Map.h"
-#include "ECS.h"
 #include "Components.h"
 #include "Vector2D.h"
 #include "Collision.h"
 
-using namespace std;
-
-
-Map* map;
+Manager manager;
 
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
 vector<ColliderComponent*> Game::colliders;
-Manager manager;
+
 auto& player(manager.addEntity());
 auto& wall(manager.addEntity());
+
+enum groupLabels : std::size_t {
+	groupMap,
+	groupPlayers,
+	groupEnemies,
+	groupColliders
+};
 
 Game::Game() {}
 
@@ -51,17 +53,18 @@ void Game::init(const string &title, int width, int height) {
 	}
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-	map = new Map();
-
 	Map::loadMap("res/level1_16x16.map", 16, 16);
 
-	player.addComponent<TransformComponent>(.15);
-	player.addComponent<SpriteComponent>("res/player.png");
+	player.addComponent<TransformComponent>(2.5);
+	player.addComponent<SpriteComponent>("res/player.png", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
+	player.addGroup(groupPlayers);
+
 	wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
 	wall.addComponent<SpriteComponent>("res/wall.png");
 	wall.addComponent<ColliderComponent>("wall");
+	wall.addGroup(groupMap);
 }
 
 void Game::pollEvents() {
@@ -86,9 +89,21 @@ void Game::update() {
 	
 }
 
+auto& tiles(manager.getGroup(groupMap));
+auto& players(manager.getGroup(groupPlayers));
+auto& enemies(manager.getGroup(groupEnemies));
+
 void Game::render() {
 	SDL_RenderClear(renderer);
-	manager.draw();
+	for (auto& tile : tiles) {
+		tile->draw();
+	}
+	for (auto& player : players) {
+		player->draw();
+	}
+	for (auto& enemy : enemies) {
+		enemy->draw();
+	}
 	SDL_RenderPresent(renderer);
 }
 
@@ -103,4 +118,5 @@ void Game::clean() {
 void Game::AddTile(int id, int x, int y) {
 	auto& tile(manager.addEntity());
 	tile.addComponent<TileComponent>(x, y, 32, 32, id);
+	tile.addGroup(groupMap);
 }
