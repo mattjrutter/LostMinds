@@ -4,6 +4,9 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
+#include <vector>
+
+class ColliderComponent;
 
 using namespace std;
 
@@ -19,8 +22,10 @@ public:
 	void render();
 	void clean();
 
+	static void AddTile(int id, int x, int y);
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
+	static vector<ColliderComponent*> colliders;
 
 private:
 	string _title;

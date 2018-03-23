@@ -15,6 +15,7 @@ Map* map;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
+vector<ColliderComponent*> Game::colliders;
 Manager manager;
 auto& player(manager.addEntity());
 auto& wall(manager.addEntity());
@@ -51,6 +52,9 @@ void Game::init(const string &title, int width, int height) {
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
 	map = new Map();
+
+	Map::loadMap("res/level1_16x16.map", 16, 16);
+
 	player.addComponent<TransformComponent>(.15);
 	player.addComponent<SpriteComponent>("res/player.png");
 	player.addComponent<KeyboardController>();
@@ -75,14 +79,15 @@ void Game::pollEvents() {
 void Game::update() {
 	manager.refresh();
 	manager.update();
-	if (Collision::AABB(player.getComponent<ColliderComponent>().collider,
-		wall.getComponent<ColliderComponent>().collider))
-		player.getComponent<TransformComponent>().velocity * -1;
+
+	for (auto col : colliders) {
+		Collision::AABB(player.getComponent<ColliderComponent>(), *col);
+	}
+	
 }
 
 void Game::render() {
 	SDL_RenderClear(renderer);
-	map->drawMap();
 	manager.draw();
 	SDL_RenderPresent(renderer);
 }
@@ -92,4 +97,10 @@ void Game::clean() {
 	SDL_DestroyWindow(window);
 	IMG_Quit();
 	SDL_Quit();
+}
+
+
+void Game::AddTile(int id, int x, int y) {
+	auto& tile(manager.addEntity());
+	tile.addComponent<TileComponent>(x, y, 32, 32, id);
 }

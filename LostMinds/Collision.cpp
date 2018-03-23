@@ -1,5 +1,6 @@
 #include "Collision.h"
-
+#include "ColliderComponent.h"
+using namespace std;
 
 bool Collision::AABB(const SDL_Rect &rectA, const SDL_Rect &rectB) {
 	if (rectA.x + rectA.w >= rectB.x &&
@@ -8,4 +9,14 @@ bool Collision::AABB(const SDL_Rect &rectA, const SDL_Rect &rectB) {
 		rectB.y + rectB.h >= rectA.y)
 		return true;
 	return false;
+}
+
+bool Collision::AABB(const ColliderComponent& colA, const ColliderComponent& colB) {
+	if (AABB(colA.collider, colB.collider)) {
+		cout << colA.tag << " hit: " << colB.tag << endl;
+		return true;
+	}
+	else {
+		return false;
+	}
 }
