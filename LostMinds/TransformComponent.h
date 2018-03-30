@@ -10,15 +10,16 @@ public:
 
 	int height = 32;
 	int width = 32;
-	double scale = 1;
-	int speed = 1;
+	int scale = 1;
+	int speed = 2;
 
 	TransformComponent() {
 		position.Zero();
 	}
 
-	TransformComponent(double sc) {
-		position.Zero();
+	TransformComponent(int sc) {
+		position.x = 624;
+		position.y = 368;
 		scale = sc;
 	}
 
@@ -27,7 +28,7 @@ public:
 		position.y = y;
 	}
 
-	TransformComponent(float x, float y, int h, int w, double sc) {
+	TransformComponent(float x, float y, int h, int w, int sc) {
 		position.x = x;
 		position.y = y;
 		height = h;
@@ -40,7 +41,6 @@ public:
 	}
 
 	void update() override {
-		position.x += velocity.x * speed;
-		position.y += velocity.y * speed;
+
 	}
 };

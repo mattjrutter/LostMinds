@@ -11,7 +11,7 @@ int main(int argc, char *argv[]) {
 
 	game = new Game();
 	game->init("Lost Minds", 1260, 768);
-	while (!game->isClosed()) {
+	while (game->running()) {
 		frameStart = SDL_GetTicks();
 
 		game->pollEvents();

@@ -12,8 +12,12 @@ SDL_Event Game::event;
 
 vector<ColliderComponent*> Game::colliders;
 
+bool Game::isRunning = false;
+
 auto& player(manager.addEntity());
 auto& wall(manager.addEntity());
+
+const char* mapTiles = "res/tiles.png";
 
 enum groupLabels : std::size_t {
 	groupMap,
@@ -21,6 +25,10 @@ enum groupLabels : std::size_t {
 	groupEnemies,
 	groupColliders
 };
+
+auto& tiles(manager.getGroup(groupMap));
+auto& players(manager.getGroup(groupPlayers));
+auto& enemies(manager.getGroup(groupEnemies));
 
 Game::Game() {}
 
@@ -43,6 +51,8 @@ void Game::init(const string &title, int width, int height) {
 		0
 	);
 
+	isRunning = true;
+
 	if (window == nullptr) {
 		cerr << "Failed to Create Window!: " << SDL_GetError() << endl;
 	}
@@ -53,18 +63,13 @@ void Game::init(const string &title, int width, int height) {
 	}
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
-	Map::loadMap("res/level1_16x16.map", 16, 16);
+	Map::loadMap("res/map.map", 80, 48);
 
-	player.addComponent<TransformComponent>(2.5);
+	player.addComponent<TransformComponent>(4);
 	player.addComponent<SpriteComponent>("res/player.png", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addGroup(groupPlayers);
-
-	wall.addComponent<TransformComponent>(300.0f, 300.0f, 300, 20, 1);
-	wall.addComponent<SpriteComponent>("res/wall.png");
-	wall.addComponent<ColliderComponent>("wall");
-	wall.addGroup(groupMap);
 }
 
 void Game::pollEvents() {
@@ -72,7 +77,7 @@ void Game::pollEvents() {
 	SDL_PollEvent(&event);
 	switch (event.type) {
 	case SDL_QUIT:
-		_closed = true;
+		isRunning = false;
 		break;
 	default:
 		break;
@@ -83,15 +88,19 @@ void Game::update() {
 	manager.refresh();
 	manager.update();
 
+	Vector2D playerVelocity = player.getComponent<TransformComponent>().velocity;
+	int playerSpeed = player.getComponent<TransformComponent>().speed;
+
+	for (auto t : tiles) {
+		t->getComponent<TileComponent>().destRect.x += (int)-(playerVelocity.x * playerSpeed);
+		t->getComponent<TileComponent>().destRect.y += (int)-(playerVelocity.y * playerSpeed);
+	}
+
 	for (auto col : colliders) {
 		Collision::AABB(player.getComponent<ColliderComponent>(), *col);
 	}
 	
 }
-
-auto& tiles(manager.getGroup(groupMap));
-auto& players(manager.getGroup(groupPlayers));
-auto& enemies(manager.getGroup(groupEnemies));
 
 void Game::render() {
 	SDL_RenderClear(renderer);
@@ -115,8 +124,8 @@ void Game::clean() {
 }
 
 
-void Game::AddTile(int id, int x, int y) {
+void Game::AddTile(int srcX, int srcY, int x, int y) {
 	auto& tile(manager.addEntity());
-	tile.addComponent<TileComponent>(x, y, 32, 32, id);
+	tile.addComponent<TileComponent>(srcX, srcY, x, y, mapTiles);
 	tile.addGroup(groupMap);
 }

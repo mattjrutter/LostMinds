@@ -18,19 +18,19 @@ public:
 	void init(const string &title, int width, int height);
 	void pollEvents();
 	void update();
-	inline bool isClosed() const { return _closed; }
+	bool running() { return isRunning; }
 	void render();
 	void clean();
 
-	static void AddTile(int id, int x, int y);
+	static void AddTile(int srcX, int srcY, int x, int y);
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
 	static vector<ColliderComponent*> colliders;
+	static bool isRunning;
 
 private:
 	string _title;
 	int _width = 1280, _height = 768;
-	bool _closed = false;
 	int tickCount = 0;
 
 	SDL_Window *window = nullptr;
