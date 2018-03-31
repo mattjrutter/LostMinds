@@ -27,6 +27,7 @@ public:
 	static SDL_Event event;
 	static vector<ColliderComponent*> colliders;
 	static bool isRunning;
+	static SDL_Rect camera;
 
 private:
 	string _title;

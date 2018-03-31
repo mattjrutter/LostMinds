@@ -10,6 +10,8 @@ Manager manager;
 SDL_Renderer* Game::renderer = nullptr;
 SDL_Event Game::event;
 
+SDL_Rect Game::camera = { 0,0,3840,2304};
+
 vector<ColliderComponent*> Game::colliders;
 
 bool Game::isRunning = false;
@@ -87,19 +89,22 @@ void Game::pollEvents() {
 void Game::update() {
 	manager.refresh();
 	manager.update();
-
-	Vector2D playerVelocity = player.getComponent<TransformComponent>().velocity;
-	int playerSpeed = player.getComponent<TransformComponent>().speed;
-
-	for (auto t : tiles) {
-		t->getComponent<TileComponent>().destRect.x += (int)-(playerVelocity.x * playerSpeed);
-		t->getComponent<TileComponent>().destRect.y += (int)-(playerVelocity.y * playerSpeed);
-	}
-
-	for (auto col : colliders) {
-		Collision::AABB(player.getComponent<ColliderComponent>(), *col);
-	}
 	
+	camera.x = (int)player.getComponent<TransformComponent>().position.x - 576;
+	camera.y = (int)player.getComponent<TransformComponent>().position.y - 320;
+
+	if (camera.x < 0) {
+		camera.x = 0;
+	}
+	if (camera.y < 0) {
+		camera.y = 0;
+	}
+	if (camera.x > camera.w) {
+		camera.x = camera.w;
+	}
+	if (camera.y > camera.h) {
+		camera.y = camera.h;
+	}
 }
 
 void Game::render() {

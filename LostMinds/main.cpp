@@ -10,7 +10,7 @@ int main(int argc, char *argv[]) {
 	int frameTime;
 
 	game = new Game();
-	game->init("Lost Minds", 1260, 768);
+	game->init("Lost Minds", 1280, 768);
 	while (game->running()) {
 		frameStart = SDL_GetTicks();
 
