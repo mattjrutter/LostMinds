@@ -21,3 +21,11 @@ void ResourceManager::AddTexture(std::string id, const char* path) {
 SDL_Texture* ResourceManager::GetTexture(std::string id){
 	return textures[id];
 }
+
+void ResourceManager::AddFont(std::string id, std::string path, int fontSize){
+	fonts.emplace(id, TTF_OpenFont(path.c_str(), fontSize));
+}
+
+TTF_Font* ResourceManager::GetFont(std::string id){
+	return fonts[id];
+}

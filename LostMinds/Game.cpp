@@ -5,6 +5,7 @@
 #include "Vector2D.h"
 #include "Collision.h"
 #include "ResourceManager.h"
+#include <sstream>
 
 Map* map;
 Manager manager;
@@ -19,6 +20,7 @@ ResourceManager* Game::resources = new ResourceManager(&manager);
 bool Game::isRunning = false;
 
 auto& player(manager.addEntity());
+auto& label(manager.addEntity());
 
 Game::Game() {}
 
@@ -53,9 +55,14 @@ void Game::init(const std::string &title, int width, int height) {
 	}
 	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
 
+	if (TTF_Init() == -1) {
+		std::cerr << "Failed to initialize TrueTypeFont!" << std::endl;
+	}
+
 	resources->AddTexture("terrain", "res/tiles.png");
 	resources->AddTexture("player", "res/player.png");
 	resources->AddTexture("projectile1", "res/projectile1.png");
+	resources->AddFont("censcbk", "res/censcbk.ttf", 16);
 
 	map = new Map("terrain", 4, 16);
 
@@ -66,6 +73,8 @@ void Game::init(const std::string &title, int width, int height) {
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
 	player.addGroup(groupPlayers);
+	SDL_Color white = { 255, 255, 255, 255 };
+	label.addComponent<UILabel>(10, 10, "Test String", "censcbk", white);
 
 	resources->CreateProjectile(Vector2D(600, 600), Vector2D(1, 0), 400, 1, "projectile1");
 }
@@ -90,6 +99,10 @@ void Game::pollEvents() {
 void Game::update() {
 	SDL_Rect playerCol = player.getComponent<ColliderComponent>().collider;
 	Vector2D playerPos = player.getComponent<TransformComponent>().position;
+
+	std::stringstream ss;
+	ss << "Player position: " << playerPos;
+	label.getComponent<UILabel>().SetLabelText(ss.str(), "censcbk");
 
 	manager.refresh();
 	manager.update();
@@ -133,6 +146,7 @@ void Game::render() {
 	for (auto& projectile : projectiles) {
 		projectile->draw();
 	}
+	label.draw();
 	SDL_RenderPresent(renderer);
 }
 
