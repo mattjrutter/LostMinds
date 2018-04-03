@@ -6,31 +6,35 @@
 #include <SDL_image.h>
 #include <vector>
 
+
+class ResourceManager;
 class ColliderComponent;
-
-using namespace std;
-
 
 class Game {
 public:
 	Game();
 	~Game();
-	void init(const string &title, int width, int height);
+	void init(const std::string &title, int width, int height);
 	void pollEvents();
 	void update();
 	bool running() { return isRunning; }
 	void render();
 	void clean();
 
-	static void AddTile(int srcX, int srcY, int x, int y);
 	static SDL_Renderer *renderer;
 	static SDL_Event event;
-	static vector<ColliderComponent*> colliders;
 	static bool isRunning;
 	static SDL_Rect camera;
+	static ResourceManager* resources;
+	enum groupLabels : std::size_t {
+		groupMap,
+		groupPlayers,
+		groupColliders,
+		groupProjectiles
+	};
 
 private:
-	string _title;
+	std::string _title;
 	int _width = 1280, _height = 768;
 	int tickCount = 0;
 

@@ -15,19 +15,19 @@ public:
 		SDL_DestroyTexture(texture);
 	}
 
-	TileComponent(int srcX, int srcY, int x, int y, const char* path) {
-		texture = TextureManager::loadTexture(path);
+	TileComponent(int srcX, int srcY, int x, int y, int tileSize, int tileScale, std::string id) {
+		texture = Game::resources->GetTexture(id);
 
 		position.x = (float)x;
 		position.y = (float)y;
 
 		srcRect.x = srcX;
 		srcRect.y = srcY;
-		srcRect.w = srcRect.h = 16;
+		srcRect.w = srcRect.h = tileSize;
 
 		destRect.x = x;
 		destRect.y = y;
-		destRect.w = destRect.h = 64;
+		destRect.w = destRect.h = tileSize * tileScale;
 	}
 
 	void update() override {

@@ -3,6 +3,7 @@
 #include "TextureManager.h"
 #include <SDL.h>
 #include "Animation.h"
+#include "ResourceManager.h"
 #include <map>
 
 class SpriteComponent : public Component {
@@ -24,25 +25,23 @@ public:
 	SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
 
 	SpriteComponent() = default;
-	SpriteComponent(const char* path) {
-		setTex(path);
+	SpriteComponent(std::string id) {
+		setTex(id);
 	}
-	SpriteComponent(const char* path, bool isAnimated) {
+	SpriteComponent(std::string id, bool isAnimated) {
 		animated = isAnimated;
 		Animation idle = Animation(0, 10, 250);
 		Animation walk = Animation(2, 10, 150);
 		animations.emplace("Idle", idle);
 		animations.emplace("Walk", walk);
 		Play("Idle");
-		setTex(path);
+		setTex(id);
 	}
 
-	~SpriteComponent(){
-		SDL_DestroyTexture(texture);
-	}
+	~SpriteComponent(){}
 
-	void setTex(const char* path) {
-		texture = TextureManager::loadTexture(path);
+	void setTex(std::string id) {
+		texture = Game::resources->GetTexture(id);
 	}
 
 	void init() override {
