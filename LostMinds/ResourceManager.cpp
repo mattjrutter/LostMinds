@@ -26,6 +26,23 @@ void ResourceManager::AddFont(std::string id, std::string path, int fontSize){
 	fonts.emplace(id, TTF_OpenFont(path.c_str(), fontSize));
 }
 
+
 TTF_Font* ResourceManager::GetFont(std::string id){
 	return fonts[id];
+}
+
+void ResourceManager::addMusic(std::string id, const char* path) {
+	musics.emplace(id, SoundManager::loadMusic(path));
+}
+
+Mix_Music* ResourceManager::getMusic(std::string id) {
+	return musics[id];
+}
+
+void ResourceManager::addEffect(std::string id, const char* path) {
+	effects.emplace(id, SoundManager::loadEffect(path));
+}
+
+Mix_Chunk* ResourceManager::getEffect(std::string id) {
+	return effects[id];
 }

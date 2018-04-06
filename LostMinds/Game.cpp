@@ -5,6 +5,7 @@
 #include "Vector2D.h"
 #include "Collision.h"
 #include "ResourceManager.h"
+#include "SoundManager.h"
 #include <sstream>
 
 Map* map;
@@ -57,6 +58,11 @@ void Game::init(const std::string &title, int width, int height) {
 
 	if (TTF_Init() == -1) {
 		std::cerr << "Failed to initialize TrueTypeFont!" << std::endl;
+	}
+
+	if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1)
+	{
+		std::cerr << "Failed to create mixer!" << std::endl;
 	}
 
 	resources->AddTexture("terrain", "res/tiles.png");

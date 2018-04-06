@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{52D8CF1A-88CE-4D06-B933-2901EC64EEE1}</ProjectGuid>
     <RootNamespace>LostMinds</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\m1598\Google Drive\Video Game Design\LostMinds\deps\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\m1598\Google Drive\Video Game Design\LostMinds\deps\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\Marcus\Documents\GitHub\LostMinds\deps\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\Marcus\Documents\GitHub\LostMinds\deps\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Users\m1598\Google Drive\Video Game Design\LostMinds\deps\include;$(IncludePath)</IncludePath>
@@ -85,7 +85,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -133,6 +133,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
@@ -147,6 +148,8 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="ProjectileComponent.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="soundComponent.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
