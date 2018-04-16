@@ -69,6 +69,7 @@ void Game::init(const std::string &title, int width, int height) {
 	resources->AddTexture("player", "res/player.png");
 	resources->AddTexture("projectile1", "res/projectile1.png");
 	resources->AddFont("censcbk", "res/censcbk.ttf", 16);
+	resources->addMusic("theme", "MusicBox.mp3");
 
 	map = new Map("terrain", 4, 16);
 
@@ -78,6 +79,7 @@ void Game::init(const std::string &title, int width, int height) {
 	player.addComponent<SpriteComponent>("player", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
+	player.addComponent<SoundComponent>("theme");
 	player.addGroup(groupPlayers);
 	SDL_Color white = { 255, 255, 255, 255 };
 	label.addComponent<UILabel>(10, 10, "Test String", "censcbk", white);
@@ -152,6 +154,7 @@ void Game::render() {
 	for (auto& projectile : projectiles) {
 		projectile->draw();
 	}
+	
 	label.draw();
 	SDL_RenderPresent(renderer);
 }

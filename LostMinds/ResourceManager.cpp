@@ -32,10 +32,12 @@ TTF_Font* ResourceManager::GetFont(std::string id){
 }
 
 void ResourceManager::addMusic(std::string id, const char* path) {
+	std::cout << "Music added to Resources" << std::endl;
 	musics.emplace(id, SoundManager::loadMusic(path));
 }
 
 Mix_Music* ResourceManager::getMusic(std::string id) {
+	std::cout << "Music music retrieved from Resources" << std::endl;
 	return musics[id];
 }
 
