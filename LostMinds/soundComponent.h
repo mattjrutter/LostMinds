@@ -15,17 +15,17 @@ public:
 	SoundComponent() = default;
 	SoundComponent(std::string id) {
 		setSound(id);
-		std::cout << "Music ID created" << std::endl;
 	}
+
 	~SoundComponent() {}
 	void setSound(std::string id) {
 		music = Game::resources->getMusic(id);
 	}
 
 	void init() override{
-		std::cout << "Music Initialized" << std::endl;
 		SoundManager::playMusic(music);
 	}
+
 	void update() override{
 
 	}
