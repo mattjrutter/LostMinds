@@ -19,7 +19,10 @@ public:
 
 	~SoundComponent() {}
 	void setSound(std::string id) {
-		music = Game::resources->getMusic(id);
+		if (id == "theme")
+			music = Game::resources->getMusic(id);
+		else
+			effect = Game::resources->getEffect(id);
 	}
 
 	void init() override{
