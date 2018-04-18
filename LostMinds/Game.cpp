@@ -69,7 +69,7 @@ void Game::init(const std::string &title, int width, int height) {
 	resources->AddTexture("player", "res/player.png");
 	resources->AddTexture("projectile1", "res/projectile1.png");
 	resources->AddFont("censcbk", "res/censcbk.ttf", 16);
-	resources->addMusic("theme", "MusicBox.mp3");
+	resources->addMusic("theme", "res/MusicBox.mp3");
 
 	map = new Map("terrain", 4, 16);
 
