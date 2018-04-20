@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "ResourceManager.h"
 #include "SoundManager.h"
+#include "Components.h"
 #include <map>
 
 class SoundComponent : public Component {
@@ -27,6 +28,9 @@ public:
 
 	void init() override{
 		SoundManager::playMusic(music);
+		if (!Mix_SetPosition(MIX_CHANNEL_POST, 90, 0)) {
+			printf("Mix_SetPanning: %s\n", Mix_GetError());
+		}
 	}
 
 	void update() override{
