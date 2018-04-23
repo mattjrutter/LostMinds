@@ -6,18 +6,23 @@
 #include "ResourceManager.h"
 #include "SoundManager.h"
 #include "Components.h"
+#include <cmath>
 #include <map>
 
 class SoundComponent : public Component {
 private:
 	Mix_Chunk* effect;
 	Mix_Music* music;
+	TransformComponent* transform;
+	std::string id2;
+	int playerX, playerY;
 public:
 	SoundComponent() = default;
 	SoundComponent(std::string id) {
+		//transform = &entity->getComponent<TransformComponent>();
 		setSound(id);
+		id2 = id;
 	}
-
 	~SoundComponent() {}
 	void setSound(std::string id) {
 		if (id == "theme")
@@ -27,32 +32,51 @@ public:
 	}
 
 	void init() override{
-		SoundManager::playMusic(music);
-		if (!Mix_SetPosition(MIX_CHANNEL_POST, 90, 0)) {
+		transform = &entity->getComponent<TransformComponent>();
+		if (!Mix_SetPosition(MIX_CHANNEL_POST, getAngle(), getDistance())) {
 			printf("Mix_SetPanning: %s\n", Mix_GetError());
+		}
+		if (id2 == "theme") {
+			SoundManager::playMusic(music);
+		}
+		else {
+			Mix_SetPosition(2, getAngle(), getDistance());
+			SoundManager::playEffect(effect);
 		}
 	}
 
 	void update() override{
 
 	}
+
+	/*
+	Functions to get distance and angle for sound location
+	*/
+	void setX(int x) {
+		playerX=x;
+	}
+
+	void setY(int y) {
+		playerY=y;
+	}
+
+	int getDistance() {
+		int dist = static_cast<int>(sqrt(pow((playerX - transform->position.x), 2) + pow((playerY - transform->position.y), 2)));
+		//std::cout << dist << std::endl;
+		return dist;
+	}
+
+	int getAngle() {
+		static const double TWOPI = 6.2831853071795865;
+		static const double RAD2DEG = 57.2957795130823209;
+		// if (x1 = x2 and y1 = y2) throw an error 
+		double theta = atan2(transform->position.x - playerX, transform->position.y - playerY);
+		if (theta < 0.0)
+			theta += TWOPI;
+		//std::cout << static_cast<int>(RAD2DEG * theta) << std::endl;
+		return static_cast<int>(RAD2DEG * theta);
+	}
 };
 
-/*
-Functions that takes 4 double values and return an angle in degrees or distance.
-*/
-#include <cmath>
 
-int getDistance(double x1, double y1, double x2, double y2) {
-    return static_cast<int>(sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2)));
-}
 
-int getAngle(double x1, double y1, double x2, double y2) {
-    static const double TWOPI = 6.2831853071795865;
-    static const double RAD2DEG = 57.2957795130823209;
-    // if (x1 = x2 and y1 = y2) throw an error 
-    double theta = atan2(x2 - x1, y1 - y2);
-    if (theta < 0.0)
-        theta += TWOPI;
-    return ststic_cast<int>(RAD2DEG * theta);
-}

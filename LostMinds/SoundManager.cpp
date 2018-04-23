@@ -10,8 +10,7 @@ Mix_Music* SoundManager::loadMusic(const char* fileName) {
 }
 
 Mix_Chunk* SoundManager::loadEffect(const char* fileName) {
-	Mix_Chunk *effect = NULL;
-	Mix_LoadWAV(fileName);
+	Mix_Chunk *effect = Mix_LoadWAV(fileName);
 	if (effect == NULL) {
 		std::cerr << "Effect failed to load from filename" << std::endl;
 		return false;
@@ -26,5 +25,5 @@ void SoundManager::playMusic(Mix_Music* music) {
 }
 
 void SoundManager::playEffect(Mix_Chunk* effect) {
-	Mix_PlayChannel(-1, effect, 0);
+	Mix_PlayChannel(2, effect, -1);
 }
