@@ -24,6 +24,7 @@ void SoundManager::playMusic(Mix_Music* music) {
 	}
 }
 
-void SoundManager::playEffect(Mix_Chunk* effect) {
+void SoundManager::playEffect(Mix_Chunk* effect, int angle, int dist) {
+	Mix_SetPosition(2, angle, dist);
 	Mix_PlayChannel(2, effect, -1);
 }

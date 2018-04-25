@@ -87,14 +87,11 @@ public:
 		c->entity = this;
 		std::unique_ptr<Component> uPtr{ c };
 		components.emplace_back(std::move(uPtr));
-
 		componentArray[getComponentTypeID<T>()] = c;
 		componentBitSet[getComponentTypeID<T>()] = true;
-
 		c->init();
 		return *c;
 	}
-
 	template<typename T> T& getComponent() const {
 		auto ptr(componentArray[getComponentTypeID<T>()]);
 		return *static_cast<T*>(ptr);
