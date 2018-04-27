@@ -21,6 +21,7 @@ ResourceManager* Game::resources = new ResourceManager(&manager);
 bool Game::isRunning = false;
 
 auto& player(manager.addEntity());
+auto& clock(manager.addEntity());
 auto& label(manager.addEntity());
 
 Game::Game() {}
@@ -80,13 +81,12 @@ void Game::init(const std::string &title, int width, int height) {
 	player.addComponent<SpriteComponent>("player", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
-	player.addComponent<SoundComponent>("clock",4000,2000);
-	//player.addComponent<SoundComponent>("theme");
+	player.addComponent<SoundComponent>("theme");
 	player.addGroup(groupPlayers);
-	player.getComponent<SoundComponent>().setX(player.getComponent<TransformComponent>().position.x);
-	player.getComponent<SoundComponent>().setY(player.getComponent<TransformComponent>().position.y);
 	SDL_Color white = { 255, 255, 255, 255 };
 	label.addComponent<UILabel>(10, 10, "Test String", "censcbk", white);
+	clock.addComponent<TransformComponent>(4000.0, 2000.0);
+	clock.addComponent<SoundComponent>("clock", player);
 
 	resources->CreateProjectile(Vector2D(600, 600), Vector2D(1, 0), 400, 1, "projectile1");
 }
@@ -167,5 +167,6 @@ void Game::clean() {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	IMG_Quit();
+	Mix_Quit();
 	SDL_Quit();
 }
