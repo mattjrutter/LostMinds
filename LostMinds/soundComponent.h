@@ -55,7 +55,9 @@ public:
 	Functions to get distance and angle for sound location
 	*/
 	int getDistance() {
-		int dist = static_cast<int>(sqrt(pow((playerX - transform->position.x), 2) + pow((playerY - transform->position.y), 2)));
+		int dist = static_cast<int>((sqrt(pow((playerX - transform->position.x), 2) + pow((playerY - transform->position.y), 2)))/2);
+		if (dist > 255)
+			dist = 255;
 		return dist;
 	}
 	int getAngle() {

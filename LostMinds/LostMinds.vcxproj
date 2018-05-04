@@ -70,8 +70,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>C:\Users\Marcus\Documents\GitHub\LostMinds\deps\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\Marcus\Documents\GitHub\LostMinds\deps\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\m1598\Google Drive\Video Game Design\LostMinds\deps\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\m1598\Google Drive\Video Game Design\LostMinds\deps\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <IncludePath>C:\Users\m1598\Google Drive\Video Game Design\LostMinds\deps\include;$(IncludePath)</IncludePath>

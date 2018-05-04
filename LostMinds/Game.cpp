@@ -81,11 +81,11 @@ void Game::init(const std::string &title, int width, int height) {
 	player.addComponent<SpriteComponent>("player", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
-	player.addComponent<SoundComponent>("theme");
+	//player.addComponent<SoundComponent>("theme");
 	player.addGroup(groupPlayers);
 	SDL_Color white = { 255, 255, 255, 255 };
 	label.addComponent<UILabel>(10, 10, "Test String", "censcbk", white);
-	clock.addComponent<TransformComponent>(4000.0, 2000.0);
+	clock.addComponent<TransformComponent>(2250.0, 1000.0);
 	clock.addComponent<SoundComponent>("clock", player);
 
 	resources->CreateProjectile(Vector2D(600, 600), Vector2D(1, 0), 400, 1, "projectile1");
