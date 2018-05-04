@@ -63,12 +63,13 @@ public:
 	int getAngle() {
 		static const double TWOPI = 6.2831853071795865;
 		static const double RAD2DEG = 57.2957795130823209;
-		double theta = atan2(playerY - transform->position.y, transform->position.x - playerX);
+		double theta = atan2(transform->position.x - playerX, transform->position.y - playerY);
 		if (theta < 0.0)
 			theta += TWOPI;
 		int angle = static_cast<int>(RAD2DEG * theta);
 		if (angle == 0)
 			angle = angle + 1;
+		std::cout << angle << std::endl;
 		return angle;
 	}
 };
