@@ -81,7 +81,7 @@ void Game::init(const std::string &title, int width, int height) {
 	player.addComponent<SpriteComponent>("player", true);
 	player.addComponent<KeyboardController>();
 	player.addComponent<ColliderComponent>("player");
-	//player.addComponent<SoundComponent>("theme");
+	player.addComponent<SoundComponent>("theme");
 	player.addGroup(groupPlayers);
 	SDL_Color white = { 255, 255, 255, 255 };
 	label.addComponent<UILabel>(10, 10, "Test String", "censcbk", white);

@@ -19,6 +19,7 @@ Mix_Chunk* SoundManager::loadEffect(const char* fileName) {
 }
 
 void SoundManager::playMusic(Mix_Music* music) {
+	Mix_VolumeMusic(20);
 	if (Mix_PlayMusic(music, -1) == -1) {
 		printf("Mix_PlayMusic: %s\n", Mix_GetError());
 	}

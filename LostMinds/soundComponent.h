@@ -69,7 +69,7 @@ public:
 		int angle = static_cast<int>(RAD2DEG * theta);
 		if (angle == 0)
 			angle = angle + 1;
-		std::cout << angle << std::endl;
+		//std::cout << angle << std::endl;
 		return angle;
 	}
 };
