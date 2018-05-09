@@ -40,6 +40,11 @@ void Map::loadMap(std::string path, int sizeX, int sizeY) {
 				tcol.addComponent<ColliderComponent>("terrain", x * scaledSize, y * scaledSize, scaledSize);
 				tcol.addGroup(Game::groupColliders);
 			}
+			else if (c == '2') {
+				auto& tcol(manager.addEntity());
+				tcol.addComponent<ColliderComponent>("clock", x * scaledSize, y * scaledSize, scaledSize);
+				tcol.addGroup(Game::groupColliders);
+			}
 			mapfile.ignore();
 		}
 	}

@@ -71,7 +71,7 @@ void Game::init(const std::string &title, int width, int height) {
 	resources->AddTexture("projectile1", "res/projectile1.png");
 	resources->AddFont("censcbk", "res/censcbk.ttf", 16);
 	resources->addMusic("theme", "res/MusicBox.mp3");
-	resources->addEffect("clock", "res/ticking_clock.wav");
+	resources->addEffect("clockSound", "res/ticking_clock.wav");
 
 	map = new Map("terrain", 4, 16);
 
@@ -85,8 +85,8 @@ void Game::init(const std::string &title, int width, int height) {
 	player.addGroup(groupPlayers);
 	SDL_Color white = { 255, 255, 255, 255 };
 	label.addComponent<UILabel>(10, 10, "Test String", "censcbk", white);
-	clock.addComponent<TransformComponent>(2250.0, 1000.0);
-	clock.addComponent<SoundComponent>("clock", player);
+	clock.addComponent<TransformComponent>(2212.0, 1024.0);
+	clock.addComponent<SoundComponent>("clockSound", player);
 
 	resources->CreateProjectile(Vector2D(600, 600), Vector2D(1, 0), 400, 1, "projectile1");
 }
@@ -122,6 +122,9 @@ void Game::update() {
 	for (auto& collider : colliders) {
 		SDL_Rect col = collider->getComponent<ColliderComponent>().collider;
 		if (Collision::AABB(col, playerCol)) {
+			if (collider->getComponent<ColliderComponent>().tag == "clock") {
+				label.getComponent<UILabel>().SetLabelText("You have found the clock and can now read a piece of the mystery:", "censcbk");
+			}
 			player.getComponent<TransformComponent>().position = playerPos;
 		}
 	}

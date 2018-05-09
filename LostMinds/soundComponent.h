@@ -47,8 +47,8 @@ public:
 		}
 	}
 	void update() override{
-		playerX = Game::camera.x+576;
-		playerY = Game::camera.y+320;
+		playerX = (float)Game::camera.x+576;
+		playerY = (float)Game::camera.y+320;
 		SoundManager::playEffect(effect, getAngle(), getDistance());
 	}
 	/*

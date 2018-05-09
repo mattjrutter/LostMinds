@@ -11,8 +11,10 @@ bool Collision::AABB(const SDL_Rect &rectA, const SDL_Rect &rectB) {
 }
 
 bool Collision::AABB(const ColliderComponent& colA, const ColliderComponent& colB) {
-	if (AABB(colA.collider, colB.collider))
+	if (AABB(colA.collider, colB.collider)) {
+		std::cout << "Collision" << std::endl;
 		return true;
+	}
 	else
 		return false;
 }
